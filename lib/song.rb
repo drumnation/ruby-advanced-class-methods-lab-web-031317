@@ -18,6 +18,16 @@ class Song
     # adds the current object instance to the @@all class objects array
   end
 
+  def self.alphabetical
+    self.all.sort_by { |song| song.name }
+    # returns all the songs in ascending alphabetical order
+  end
+
+  def self.destroy_all
+    self.all.clear
+    # clear all the objects from the @@all class array
+  end
+
   # class constructors
 
   def self.create 
@@ -41,6 +51,37 @@ class Song
     # creates a new class instance with name argument, saves, and returns instance
   end
 
+  def self.new_from_filename(filename)
+    split_file = filename.split(" - ")
+    artist_name = split_file[0]
+    song_name = split_file[1]
+
+    song = self.new
+    song.name = song_name.chomp(".mp3")
+    song.artist_name = artist_name
+    song
+    # split file name into artist name and song name
+    # create a new song instance - does not save instance
+    # modifies song name to remove attached file extension
+    # returns song
+  end
+
+  def self.create_from_filename(filename)
+    split_file = filename.split(" - ")
+    artist_name = split_file[0]
+    song_name = split_file[1]
+
+    song = self.new_from_filename(filename)
+    song.name = song_name.chomp(".mp3")
+    song.artist_name = artist_name
+    # song.save
+    song
+    # split file into artist and song name
+    # create new song instance -> which saves object
+    # remove extension, set song name and artist name
+    #
+  end
+
   # finder class methods
   
   def self.find_by_name(name) # helper method for find_or_create_by_name(name)
@@ -56,46 +97,6 @@ class Song
     end
     #  @@all for song instance, returns it, or 
     # creates a new instance using name argument using create_by_name
-  end
-
-  def self.alphabetical
-    self.all.sort_by { |song| song.name }
-    # returns all the songs in ascending alphabetical order
-  end
-
-  def self.new_from_filename(filename)
-    split_file = filename.split(" - ")
-    artist_name = split_file[0]
-    song_name = split_file[1]
-
-    song = self.new
-    song.name = song_name.chomp(".mp3")
-    song.artist_name = artist_name
-    song
-    # split file name into artist name and song name
-    # create a new song instance - does not save
-    # modifies song name to remove attached file extension
-    # returns song
-  end
-
-  def self.create_from_filename(filename)
-    split_file = filename.split(" - ")
-    artist_name = split_file[0]
-    song_name = split_file[1]
-
-    song = self.create
-    song.name = song_name.chomp(".mp3")
-    song.artist_name = artist_name
-    song
-    # split file into artist and song name
-    # create new song instance -> which saves object
-    # remove extension, set song name and artist name
-    #
-  end
-
-  def self.destroy_all
-    self.all.clear
-    # clear all the objects from the @@all class array
   end
   
 end
