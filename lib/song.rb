@@ -74,12 +74,12 @@ class Song
     song = self.new_from_filename(filename)
     song.name = song_name.chomp(".mp3")
     song.artist_name = artist_name
-    # song.save
+    song.save
     song
     # split file into artist and song name
-    # create new song instance -> which saves object
+    # creates new song instance using self.new_from_filename(filename)
     # remove extension, set song name and artist name
-    #
+    # saves object and returns it
   end
 
   # finder class methods
